@@ -1,5 +1,5 @@
 import Logo from '../../assets/image/logo.png';
-import { MyContext } from '../../App';
+// import { MyContext } from '../../App';
 import { useContext, useEffect, useState } from 'react';
 import patern from '../../assets/image/patern.jpeg';
 import { MdEmail } from "react-icons/md";
@@ -23,7 +23,7 @@ const SignUp= () =>{
     const [isShowConfirmPassword, setisShowConfirmPassword] = useState(false);
 
 
-    const context = useContext(MyContext);
+    // const context = useContext(MyContext);
 
     useEffect(()=>{
         context.setIsHideSidebarAndHeader(true);

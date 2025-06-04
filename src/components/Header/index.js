@@ -28,7 +28,7 @@ import Divider from '@mui/material/Divider';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Logout from '@mui/icons-material/Logout';
 import { FaShieldAlt } from "react-icons/fa";
-import { MyContext } from '../../App';
+// // import { MyContext } from '../../App';
 import UserAvatarImg from '../UserAvatarImg/indix';
 
 
@@ -38,7 +38,7 @@ const Header=()=>{
     const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
     const openMyAcc = Boolean(anchorEl);
     const openNotification = Boolean(notificationAnchorEl);
-    const context = useContext(MyContext);
+    // const context = useContext(MyContext);
     
     const handleCloseNotificationsDrop = () => {
         setNotificationAnchorEl(null);

@@ -15,7 +15,7 @@ import { MdOutlineLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
 import SearchBox from '../SearchBox';
-import { MyContext } from '../../App';
+// import { MyContext } from '../../App';
 // import { OpenContext } from '../../pages/Messenger/index.js';
 
 
@@ -23,7 +23,7 @@ const Sidbar = () =>{
 
     const [activeTab, setActiveTab] = useState(0);
     const [isToggleSubmenu, setIsToggleSubmenu] = useState(false);
-    const context = useContext(MyContext);
+    // const context = useContext(MyContext);
     
     
 

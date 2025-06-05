@@ -2,12 +2,14 @@ import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { createContext, useEffect, useState } from 'react';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import Login from './pages/Login/index.js';
+import Unauthorized from './pages/Unauthorized';
+import ProtectedRoute from './components/ProtectedRoute';
 
 import Header from './components/Header/index.js';
 import Sidbar from './components/Sidbar/index.js';
-import ProtectedRoute from './components/ProtectedRoute';
 
-import Login from './pages/Login/index.js';
 import SignUp from './pages/SignUp/index.js';
 import Dashbord from './pages/Dashbord/index.js';
 import Products from './pages/Products/index.js';
@@ -15,18 +17,60 @@ import ProductDetails from './pages/ProductDetails/index.js';
 import CustomerList from './pages/Customer/index.js';
 import CustomerDetails from './pages/CustomerDetails/index.js';
 import Messenger from './pages/Messenger/index.js';
-// import Unauthorized from './pages/Unauthorized';
 import EmployeeDashboard from './pages/EmployeeDashboard';
 
-import { AuthProvider } from './contexts/AuthContext';
+// Create context for app-wide state
+export const AppContext = createContext();
 
-// Direct routes
-const AdminDashboard = () => <Dashbord />;
+// Admin Layout Component
+const AdminLayout = ({ children }) => {
+  return (
+    <div className="admin-layout">
+      {/* Add your admin layout components here */}
+      {children}
+    </div>
+  );
+};
+
+// Employee Layout Component
+const EmployeeLayout = ({ children }) => {
+  return (
+    <div className="employee-layout">
+      {/* Add your employee layout components here */}
+      {children}
+    </div>
+  );
+};
+
+// Admin Dashboard Component
+const AdminDashboard = () => (
+  <ProtectedRoute requiredRole="ADMIN">
+    <AdminLayout>
+      <div>Admin Dashboard Content</div>
+    </AdminLayout>
+  </ProtectedRoute>
+);
+
+// Employee Dashboard Component
 const EmployeeDashboardRoute = () => <EmployeeDashboard />;
 
-// Simple Home route
+// Home Component with role-based redirection
 const Home = () => {
-  return <Navigate to="/admin/dashboard" replace />;
+  const { isAuthenticated, hasRole } = useAuth();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (hasRole('ADMIN')) {
+    return <Navigate to="/admin" replace />;
+  }
+
+  if (hasRole('EMPLOYEE')) {
+    return <Navigate to="/employee" replace />;
+  }
+
+  return <Navigate to="/login" replace />;
 };
 
 function App() {
@@ -35,6 +79,10 @@ function App() {
   const [isHideSidebarAndHeader, setIsHideSidebarAndHeader] = useState(false);
   const [themeMode, setThemeMode] = useState(true);
   const [isMessenger, setIsMessenger] = useState(false);
+  const [appState, setAppState] = useState({
+    isHideSidebarAndHeader: false,
+    // Add other app-wide state here
+  });
 
   useEffect(() => {
     if (themeMode) {
@@ -63,30 +111,31 @@ function App() {
 
   return (
     <AuthProvider>
-      <MyContext.Provider value={values}>
+      <AppContext.Provider value={{ ...appState, setAppState }}>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
             
             {/* Protected routes */}
             <Route path="/admin/*" element={<AdminLayout />}>
-              <Route index element={<Dashbord />} />
+              <Route index element={<AdminDashboard />} />
               <Route path="products" element={<Products />} />
               <Route path="customers" element={<CustomerList />} />
               <Route path="customers/:id" element={<CustomerDetails />} />
-              <Route path="employees" element={<EmployeeDashboard />} />
+              <Route path="employees" element={<EmployeeDashboardRoute />} />
             </Route>
 
             <Route path="/employee/*" element={<EmployeeLayout />}>
-              <Route index element={<EmployeeDashboard />} />
+              <Route index element={<EmployeeDashboardRoute />} />
               <Route path="customers" element={<CustomerList />} />
               <Route path="customers/:id" element={<CustomerDetails />} />
             </Route>
           </Routes>
         </BrowserRouter>
-      </MyContext.Provider>
+      </AppContext.Provider>
     </AuthProvider>
   );
 }

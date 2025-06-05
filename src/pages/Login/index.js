@@ -1,6 +1,5 @@
 import Logo from '../../assets/image/logo.png';
-// import { MyContext } from '../../App';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import patern from '../../assets/image/patern.jpeg';
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
@@ -18,13 +17,11 @@ const Login = () => {
     password: ''
   });
   const [error, setError] = useState('');
-  // const context = useContext(MyContext);
   const { login, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     // Hide sidebar/header and set tab title/icon
-    context.setIsHideSidebarAndHeader(true);
     document.title = "Login";
     const favicon = document.querySelector("link[rel='icon']");
     if (favicon) favicon.href = Logo;
@@ -42,7 +39,7 @@ const Login = () => {
         navigate('/login', { replace: true });
       }
     }
-  }, [user, context, navigate]);
+  }, [user, navigate]);
 
   const focusInput = (index) => {
     setInputIndex(index);

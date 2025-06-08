@@ -7,17 +7,25 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
+  const [authority, setAuthority] = useState(sessionStorage.getItem('authority'));
+  const isAuthenticated = !!user;
+  const hasRole = (role) =>{
+    return user?.authority === role;
+  }
+  
 
   const login = async (credentials) => {
     try {
       const response = await authApi.login(credentials);
       const { token } = response.data;
       localStorage.setItem('token', token);
+      sessionStorage.setItem('authority',response.data.authority);
       setToken(token);
+      setAuthority(response.data.authority);
       
       // Decode token to get authority and ensure it's a string
       const decodedToken = jwtDecode(token);
-      const authority = (decodedToken.authorities && decodedToken.authorities[0]?.authority || 'USER').toString();
+      const authority = (response.data.authority || 'USER').toString();
       
       setUser({ 
         ...decodedToken,
@@ -48,11 +56,32 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // useEffect(() => {
+  //   if (token) {
+  //     setUser(jwtDecode(token));
+  //   }
+  // }, [token]);
+
   useEffect(() => {
-    if (token) {
-      setUser(jwtDecode(token));
+  if (token) {
+    try {
+      console.log("this is authority :", authority);
+      console.log("this is token :", token);
+      const decoded = jwtDecode(token);
+      setUser({
+        ...decoded,
+        authority,
+        isAuthenticated: true
+      });
+    } catch (err) {
+      console.error('Token decoding failed:', err);
+      setUser(null);
     }
-  }, [token]);
+  } else {
+    setUser(null);
+  }
+}, [token]);
+
 
   return (
     <AuthContext.Provider value={{
@@ -61,6 +90,8 @@ export const AuthProvider = ({ children }) => {
       login,
       logout,
       changePassword,
+      isAuthenticated,
+      hasRole,
     }}>
       {children}
     </AuthContext.Provider>

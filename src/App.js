@@ -18,38 +18,64 @@ import CustomerList from './pages/Customer/index.js';
 import CustomerDetails from './pages/CustomerDetails/index.js';
 import Messenger from './pages/Messenger/index.js';
 import EmployeeDashboard from './pages/EmployeeDashboard';
-
+import { Outlet } from 'react-router-dom';
+import Dashboard from './pages/Admin/index.js';
 // Create context for app-wide state
 export const AppContext = createContext();
 
 // Admin Layout Component
-const AdminLayout = ({ children }) => {
+// const AdminLayout = ({ children }) => {
+//   return (
+//     <div className="admin-layout">
+//       {/* Add your admin layout components here */}
+//       {children}
+//     </div>
+//   );
+// };
+
+const AdminLayout = () => {
   return (
     <div className="admin-layout">
-      {/* Add your admin layout components here */}
-      {children}
+      {/* <h1>Hello THis is the Admin Layout </h1> */}
+      <Header />
+      {/* <Dashboard /> */}
+      <Sidbar />
+      <main>
+        <Outlet />
+      </main>
     </div>
   );
 };
 
 // Employee Layout Component
-const EmployeeLayout = ({ children }) => {
+// const EmployeeLayout = ({ children }) => {
+//   return (
+//     <div className="employee-layout">
+//       {/* Add your employee layout components here */}
+//       {children}
+//     </div>
+//   );
+// };
+const EmployeeLayout = () => {
   return (
     <div className="employee-layout">
-      {/* Add your employee layout components here */}
-      {children}
+      <Header />
+      <Sidbar />
+      <main>
+        <Outlet />
+      </main>
     </div>
   );
 };
 
 // Admin Dashboard Component
-const AdminDashboard = () => (
-  <ProtectedRoute requiredRole="ADMIN">
-    <AdminLayout>
-      <div>Admin Dashboard Content</div>
-    </AdminLayout>
-  </ProtectedRoute>
-);
+// const AdminDashboard = () => (
+//   <ProtectedRoute requiredRole="ADMIN">
+//     <AdminLayout>
+//       <div>Admin Dashboard Content</div>
+//     </AdminLayout>
+//   </ProtectedRoute>
+// );
 
 // Employee Dashboard Component
 const EmployeeDashboardRoute = () => <EmployeeDashboard />;
@@ -111,7 +137,7 @@ function App() {
 
   return (
     <AuthProvider>
-      <AppContext.Provider value={{ ...appState, setAppState }}>
+      <AppContext.Provider value={values}>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -121,7 +147,7 @@ function App() {
             
             {/* Protected routes */}
             <Route path="/admin/*" element={<AdminLayout />}>
-              <Route index element={<AdminDashboard />} />
+              <Route index element={<Dashboard />} />
               <Route path="products" element={<Products />} />
               <Route path="customers" element={<CustomerList />} />
               <Route path="customers/:id" element={<CustomerDetails />} />

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:8003/api/v1/shalom';
-const AUTH_BASE_URL = 'http://localhost:8003/api/v1/shalom/auth';
+const AUTH_BASE_URL = 'http://localhost:8003/api/v1/shalom/auth/';
 
 // Create axios instance with default config
 const api = axios.create({

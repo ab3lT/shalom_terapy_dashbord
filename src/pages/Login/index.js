@@ -49,9 +49,10 @@ const Login = () => {
     e.preventDefault();
     try {
       const success = await login(credentials);
-      if (success) {
+      if (success && user) {
         // Get authority from the credentials
-        const authority = credentials.authority;
+        const authority = user.authority;
+        // const authority = localStorage.getItem('authority') || '';
         
         // Redirect based on authority
         if (authority === 'ADMIN') {

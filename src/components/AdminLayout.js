@@ -11,22 +11,22 @@ const AdminLayout = () => {
 
   return (
     <div className='main d-flex'>
-      {!isHideSidebarAndHeader && <Header />}
+      {/* {!isHideSidebarAndHeader && <Header />}
       {!isHideSidebarAndHeader && (
         <div className={`sidebarWrapper ${isToggleSidebar ? 'toggle' : ''}`}>
           <Sidebar />
         </div>
-      )}
+      )} */}
 
-      {isMessenger && (
+      {/* {isMessenger && (
         <div className={`MessengerWrapper ${isToggleSidebar ? 'toggle' : ''}`}>
           <Messenger />
         </div>
-      )}
+      )} */}
 
-      <div className={`content ${isHideSidebarAndHeader ? 'full' : ''} ${isToggleSidebar ? 'toggle' : ''}`}>
+      {/* <div className={`content ${isHideSidebarAndHeader ? 'full' : ''} ${isToggleSidebar ? 'toggle' : ''}`}>
         <Outlet />
-      </div>
+      </div> */}
     </div>
   );
 };

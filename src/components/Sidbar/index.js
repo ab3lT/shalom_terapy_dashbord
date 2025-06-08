@@ -15,6 +15,8 @@ import { MdOutlineLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
 import SearchBox from '../SearchBox';
+import { AppContext } from '../../App.js';
+import '../../App.css';
 // import { MyContext } from '../../App';
 // import { OpenContext } from '../../pages/Messenger/index.js';
 
@@ -23,7 +25,7 @@ const Sidbar = () =>{
 
     const [activeTab, setActiveTab] = useState(0);
     const [isToggleSubmenu, setIsToggleSubmenu] = useState(false);
-    // const context = useContext(MyContext);
+    const context = useContext(AppContext);
     
     
 
@@ -98,9 +100,8 @@ const Sidbar = () =>{
                         </Button>
                         </Link>
                     </li>
-
-{/* new list */}
-<li>
+                    {/* new list */}
+                    <li>
                         <Button className={`w-100 ${activeTab === 6 ? 'active' : ''}`} onClick={() => isOpenSubmenu(6)}>
                             <span className='icon'><MdOutlineBusiness /></span>
                             Branch
@@ -204,31 +205,7 @@ const Sidbar = () =>{
                         </div>
                     </li>
 
-                    {/* <li>
-                        <Link to="/">
-                        <Button
-                            className={`w-100 ${activeTab===5 ? "active" : ""}`}
-                            onClick={() => context.setIsMessenger(!context.isMessenger)}
-
-                        >
-                            <span className="icon"> <FaFacebookMessenger /></span>
-                             Messenger
-                            <span className="arrow"> <FaAngleRight /> </span>
-                        </Button>
-                        </Link>
-                    </li> */}
-
-
-
-                    {/* <li>
-                        <Link to="/">
-                            <Button className={`w-100 ${activeTab===6 ? 'active' : ''}`}>
-                                <span className='icon'><MdMarkEmailUnread/> </span>
-                                Email
-                                <span className='arrow'> <FaAngleRight/></span>
-                            </Button>
-                        </Link>
-                    </li> */}
+                    
 
                     <li>
                         <Link to="/">
@@ -241,126 +218,6 @@ const Sidbar = () =>{
                     </li>
 
 
-                    {/* <li>
-                        <Button className='m-100'>
-                            <span className='icon'><FaFacebookMessenger/> </span>
-                            Messg
-                            <span className='arrow'> <FaAngleRight/></span>
-                        </Button>
-                    </li>
-
-                    <li>
-                        <Button className='m-100'>
-                            <span className='icon'><IoIosNotifications/> </span>
-                            Notificarions
-                            <span className='arrow'> <FaAngleRight/></span>
-                        </Button>
-                    </li>
-
-                    <li>
-                        <Button className='m-100'>
-                            <span className='icon'><IoSettingsSharp/> </span>
-                            Settings
-                            <span className='arrow'> <FaAngleRight/></span>
-                        </Button>
-                    </li>
-
-                    <li>
-                        <Button className='m-100'>
-                            <span className='icon'><MdDashboard/> </span>
-                            Dashbord
-                            <span className='arrow'> <FaAngleRight/></span>
-                        </Button>
-                    </li>
-
-                    <li>
-                        <Button className='m-100'>
-                            <span className='icon'><FaProductHunt/> </span>
-                            Products
-                            <span className='arrow'> <FaAngleRight/></span>
-                        </Button>
-                    </li>
-
-                    <li>
-                        <Button className='m-100'>
-                            <span className='icon'><FaCartArrowDown/> </span>
-                            Orders
-                            <span className='arrow'> <FaAngleRight/></span>
-                        </Button>
-                    </li>
-
-                    <li>
-                        <Button className='m-100'>
-                            <span className='icon'><FaFacebookMessenger/> </span>
-                            Messg
-                            <span className='arrow'> <FaAngleRight/></span>
-                        </Button>
-                    </li>
-
-                    <li>
-                        <Button className='m-100'>
-                            <span className='icon'><IoIosNotifications/> </span>
-                            Notificarions
-                            <span className='arrow'> <FaAngleRight/></span>
-                        </Button>
-                    </li>
-
-                    <li>
-                        <Button className='m-100'>
-                            <span className='icon'><IoSettingsSharp/> </span>
-                            Settings
-                            <span className='arrow'> <FaAngleRight/></span>
-                        </Button>
-                    </li>
-
-
-                    <li>
-                        <Button className='m-100 '>
-                            <span className='icon'><MdDashboard/> </span>
-                            Dashbord
-                            <span className='arrow'> <FaAngleRight/></span>
-                        </Button>
-                    </li>
-
-                    <li>
-                        <Button className='m-100'>
-                            <span className='icon'><FaProductHunt/> </span>
-                            Products
-                            <span className='arrow'> <FaAngleRight/></span>
-                        </Button>
-                    </li>
-
-                    <li>
-                        <Button className='m-100'>
-                            <span className='icon'><FaCartArrowDown/> </span>
-                            Orders
-                            <span className='arrow'> <FaAngleRight/></span>
-                        </Button>
-                    </li>
-
-                    <li>
-                        <Button className='m-100'>
-                            <span className='icon'><FaFacebookMessenger/> </span>
-                            Messg
-                            <span className='arrow'> <FaAngleRight/></span>
-                        </Button>
-                    </li>
-
-                    <li>
-                        <Button className='m-100'>
-                            <span className='icon'><IoIosNotifications/> </span>
-                            Notificarions
-                            <span className='arrow'> <FaAngleRight/></span>
-                        </Button>
-                    </li>
-
-                    <li>
-                        <Button className='m-100'>
-                            <span className='icon'><IoSettingsSharp/> </span>
-                            Settings
-                            <span className='arrow'> <FaAngleRight/></span>
-                        </Button>
-                    </li> */}
 
                    
                 </ul>

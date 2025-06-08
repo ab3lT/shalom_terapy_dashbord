@@ -23,6 +23,7 @@ import { MyContext } from "../../App";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import ProtectedRoute from "../../components/ProtectedRoute";
+import { AppContext } from '../../App.js';
 
 export const data = [
     ["Task", "Hours per Day"],
@@ -38,7 +39,7 @@ export const options = {
     chartArea: { width: '100%', height: '80%' },
 };
 
-const Dashbord = () => {
+const Dashboard = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [showBy, setShowBy] = useState('');
     const [catBy, setCatBy] = useState('');
@@ -48,13 +49,13 @@ const Dashbord = () => {
     const open = Boolean(anchorEl);
     const ITEM_HEIGHT = 48;
 
-   // const context = useContext(MyContext);
-    const { hasRole, logout, isAuthenticated } = useAuth();
+   const context = useContext(AppContext);
+//    const { hasRole, logout, isAuthenticated } = useAuth();
 
     useEffect(() => {
-        context.setIsHideSidebarAndHeader(false);
+        // context.setIsHideSidebarAndHeader(false);
         window.scrollTo(0,0);
-    }, [context]);
+    }, []);
 
     useEffect(() => {
         document.title = "Shalom Therapy";
@@ -332,12 +333,12 @@ const Dashbord = () => {
     );
 };
 
-const AdminDashbord = () => {
-    return (
-        <ProtectedRoute requiredRole="ADMIN">
-            <Dashbord />
-        </ProtectedRoute>
-    );
-};
+// const AdminDashboard = () => {
+//     return (
+//         // <ProtectedRoute requiredRole="ADMIN">
+//             <Dashboard />
+//         // </ProtectedRoute>
+//     );
+// };
 
-export default AdminDashbord;
+export default Dashboard;
